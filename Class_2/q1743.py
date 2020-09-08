@@ -28,7 +28,7 @@ def dfs(depth, x,y):
 stack=[]
 for i in range(n):
     for j in range(m):
-        if matrix[i][j]==1 and not visit[i][j]:
+        if not visit[i][j] and matrix[i][j]:
             visit[i][j]=True
             stack.append(dfs(1,i,j))
 
