@@ -10,8 +10,8 @@ visit=[[[False for _ in range(w)] for _ in range(h)] for _ in range(k+1)]
 
 dx1=[1,0,-1,0]
 dy1=[0,1,0,-1]
-dx2=[2,1,2,1,-1,-2,-1,-2]
-dy2=[-1,-2,1,2,2,1,-2,-1]
+dx2=[-2,1,2,1,-1,2,-1,-2]
+dy2=[1,-2,1,2,2,-1,-2,-1]
 
 def bfs(x,y,move,jump):
     que=deque()
