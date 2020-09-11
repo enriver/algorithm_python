@@ -1,7 +1,6 @@
 #성곽
 
 import sys
-from collections import deque
 
 m,n=map(int, sys.stdin.readline().split()) #m 렬 n행
 
@@ -39,27 +38,57 @@ for i in range(n):
             mat[i][j].append(dir[k])
 
 
-
-def bfs(cnt,x,y):
-    li=[]
+def dfs(depth, x,y):
+    stack.append([x,y])
+    pos=list()
+  
     for i in range(4):
         if mat[x][y][i]==0:
-            li.append(i)
-    for i in li:
-        nx,ny=x+dx[i], y+dy[i]  # nx 동서, ny 남북
+            pos.append(i)
+        else:
+            visit[i][x][y]=True
+
+    for k in pos:
+        nx,ny=x+dx[k], y+dy[k]
+        visit[k][x][y]=True
         if 0<=nx<n and 0<=ny<m:
-            if not visit[i][nx][ny]:
-                visit[i][nx][ny]=True
-                cnt=bfs(cnt+1,nx,ny)
-    return cnt
+            if not visit[4][nx][ny]:
+                visit[4][nx][ny]=True
+                depth=dfs(depth+1, nx,ny)
+                
 
+    return depth
 
-stack=[]
+room_num=0
+room_size=0
+after_crash=-1
+
 for i in range(n):
     for j in range(m):
-        stack.append(bfs(0,i,j))
+        if not visit[4][i][j]:
+            visit[4][i][j]=True
+            stack=list()
+            result=dfs(1,i,j)
+            room_size=max(room_size,result)
+            room_num+=1
+            for k in range(len(stack)):
+                mat[stack[k][0]][stack[k][1]]=result
+                      
+print(room_num)
+print(room_size)
 
-stack.sort()
+for i in range(n):
+    for j in range(m):
+        for t in range(4):
+            ni,nj=i+dx[t],j+dy[t]
+            if 0<=ni<n and 0<=nj<m:
+                if mat[i][j]!=mat[ni][nj]:
+                    after_crash=max(after_crash,mat[i][j]+mat[ni][nj])
 
-print(len(stack))
-print(stack)
+if after_crash==-1:
+    if room_num>1:
+        print(2*mat[0][0])
+    else:
+        print(1)
+else:
+    print(after_crash)
