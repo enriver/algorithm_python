@@ -12,6 +12,7 @@ dy=[1,-1,0,0]
 mat=[[list() for _ in range(m)] for _ in range(n)]
 
 direction={
+    0:[0,0,0,0],    
     1:[0,1,0,0],
     2:[0,0,0,1],
     3:[0,1,0,1],
@@ -47,19 +48,14 @@ def dfs(x,y):
     visit[x][y]=True
     stack.append([x,y])
     depth+=1
-    pos=list()
   
-    for i in range(4):
-        if mat[x][y][i]==0:
-            pos.append(i)
-        
-    for k in pos:
-        nx,ny=x+dx[k], y+dy[k]       
-        if 0<=nx<n and 0<=ny<m:
-            if not visit[nx][ny]:
-                dfs(nx,ny)
+    for k in range(4):
+        if mat[x][y][k]==0:
+            nx,ny=x+dx[k], y+dy[k]       
+            if 0<=nx<n and 0<=ny<m:
+                if not visit[nx][ny]:
+                    dfs(nx,ny)
                 
-
 for i in range(n):
     for j in range(m):
         if not visit[i][j]:
@@ -71,17 +67,20 @@ for i in range(n):
                 mat[stack[k][0]][stack[k][1]]=depth
             depth=0
                       
-
 print(room_num)
 print(room_size)
 
 for i in range(n):
     for j in range(m):
-        for t in range(4):
-            ni,nj=i+dx[t],j+dy[t]
-            if 0<=ni<n and 0<=nj<m:
-                if mat[i][j]!=mat[ni][nj]:
-                    after_crash=max(after_crash,mat[i][j]+mat[ni][nj])
+        if visit[i][j]==True:
+            visit[i][j]=False
+            for t in range(4):
+                ni,nj=i+dx[t],j+dy[t]
+                if 0<=ni<n and 0<=nj<m:
+                    if mat[i][j]!=mat[ni][nj]:
+                        visit[ni][nj]=False
+                        after_crash=max(after_crash,mat[i][j]+mat[ni][nj])
+
 
 if after_crash==-1:
     if room_num>1:
