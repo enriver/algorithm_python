@@ -6,13 +6,13 @@ n=int(sys.stdin.readline())
 
 
 def isPrime(num):
-    if num<2:
-        return False
-    else:
-        for i in range(2,num):
-            if num%i==0:
-                return False
-        return True
+    if num==1: return False
+
+    sqrt=int(math.sqrt(num))
+
+    for k in range(2, sqrt+1):
+        if num % k==0: return False
+    return True
 
 def mysterious(num):
     val=num
