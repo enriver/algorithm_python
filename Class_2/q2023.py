@@ -1,6 +1,7 @@
 #신기한 소수
 
 import sys
+import math
 
 n=int(sys.stdin.readline())
 
@@ -14,23 +15,16 @@ def isPrime(num):
         if num % k==0: return False
     return True
 
-def mysterious(num):
-    val=num
-    while val>0:
-        if isPrime(val)==True:
-            continue
-        else:
-            return False
-        val=val/10
-    return True
+def checkPrime(num):
+    if len(num)==n:
+        print(num)
+    
+    for i in ['1','3','5','7','9']:
+        val=num+i
+        if isPrime(int(val)):
+            checkPrime(val)
 
 
-now=int('9'*(n-1))+1
-primeStack=list()
 
-while now<=int('9'*n):
-    if mysterious(now) == True:
-        primeStack.append(now)
-    now+=1
-
-print(primeStack)
+for i in ['2','3','5','7']:
+    checkPrime(i)
