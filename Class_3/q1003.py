@@ -4,29 +4,22 @@ import sys
 
 n=int(sys.stdin.readline())
 
-zero=0
-one=0
+dp=[[0]*2 for _ in range(41)]
 
-def fibonacci(n):
-    global zero
-    global one
-    if n==0:
-        zero+=1
-        return 0
-    elif n==1:
-        one+=1
-        return 1
-    else:
-        return fibonacci(n-2)+fibonacci(n-1)
+dp[0]=[1,0]
+dp[1]=[0,1]
+
+dp[2][0]=dp[0][0]+dp[1][0]
+dp[2][1]=dp[0][1]+dp[1][1]
+
+def fibonacci(num):
+    for i in range(2, num+1):
+        dp[i][0]=dp[i-1][0]+dp[i-2][0]
+        dp[i][1]=dp[i-1][1]+dp[i-2][1]
+
 
 for _ in range(n):
-    m=int(sys.stdin.readline())
-
-    fibonacci(m)
-
-    print(zero,one)
-    zero=0
-    one=0
-
-
-
+    k=int(sys.stdin.readline())
+    fibonacci(k)
+    print(dp[k][0], end=' ')
+    print(dp[k][1])
