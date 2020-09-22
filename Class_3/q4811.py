@@ -2,12 +2,15 @@
 
 import sys
 
-def pill(num):
-        if num==0:
-            return 1
-        else:
-            
-    return 
+
+dp=[[0 for _ in range(31)] for _ in range(31)]
+
+
+def pill(W,H):
+
+        
+
+
 
 while True:
     n=int(sys.stdin.readline())
@@ -15,4 +18,5 @@ while True:
     if n==0:
         break
     else:
-        pill(n)
+        print(pill(n,0))
+        
