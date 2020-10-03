@@ -6,8 +6,8 @@ n=int(sys.stdin.readline())
 
 num_arr=list(map(int,sys.stdin.readline().split()))
 
-dp=[0 for _ in range(n)]
-asc=[[x] for x in num_arr]
+dp=[1 for _ in range(n)]
+route=[0 for _ in range(n)]
 
 for i in range(n):
     for j in range(i):
@@ -16,15 +16,16 @@ for i in range(n):
                 continue
             else:
                 dp[i]=dp[j]+1
-                asc[i]=asc[j]+[num_arr[i]]
+                route[i]=j
 
-length=0
-for i in range(len(asc)):
-    if len(asc[i])>length:
-        length=len(asc[i])
-        position=i
 
-#print(dp)
-#print(asc)
-print(length)
-print(*asc[position])
+print(max(dp))
+back=dp.index(max(dp))
+
+result=list()
+
+for i in range(max(dp)):
+    result.append(num_arr[back])
+    back=route[back]
+
+print(*sorted(result))
