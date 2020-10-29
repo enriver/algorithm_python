@@ -18,7 +18,6 @@ for i in range(n):
                 dp[i]=dp[j]+1
                 route[i]=j
 
-
 print(max(dp))
 back=dp.index(max(dp))
 
