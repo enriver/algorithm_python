@@ -2,49 +2,42 @@
 
 import sys
 
-val=sys.stdin.readline()
-
+# long_and_mnemonic_identifier -> longAndMnemonicIdentifier
 def to_java(word):
-    index=len(word)-1
-
-    while index>-1:
-        if word[index].isupper()==True:
-            word=word.replace(word[index],'_'+word[index].lower())
-        index-=1
+    if '__' in word: # 언더바가 2개 이상 나오면 에러
+        return 'Error!'
     
+    if word[0]=='_' or word[-1]=='_' : # 언더바가 맨앞 또는 맨뒤에 나오면 에러
+        return 'Error!'
+    
+    if word.islower()==False : # 언더바가 있지만 대문자를 포함할경우 에러
+        return 'Error!'
+
+    word=word.replace('_', ' ').title().replace(' ','')
+    word=word.replace(word[0],word[0].lower(),1)
+
     return word
 
-def to_cpp(word):
-    word=word.replace('_',' ').title().replace(' ','')
+# longAndMnemonicIdentifier -> long_and_mnemonic_identifier
+def to_cpp(word): 
+    if word[0].isupper()==True: # 첫글자가 대문자면 에러
+        return 'Error!'
 
-    return word
+    result=''
 
-error=True
+    for i in word:
+        if i.isupper()==True:
+            result+='_'+i.lower()
+        else:
+            result+=i
 
-ver=0
+    return result
 
-if '_' in val:
-    result=to_cpp(val)
-    ver=1
-elif val.islower()==False:
-    result=to_java(val)
-    ver=2
-elif val.islower()==True:
-    result=val
-    error=False
 
-if ver==1:
-    if '_' in result:
-        error=True
-    else:
-        error=False
-elif ver==2:
-    if result.islower()==False:
-        error=True
-    else:
-        error=False
+val=sys.stdin.readline().strip()
 
-if error==True:
-    print('Error!')
+if '_' in val :
+    print(to_java(val))
+
 else:
-    print(result)
+    print(to_cpp(val))
