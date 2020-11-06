@@ -1,4 +1,4 @@
-# 제로
+# 제로 - S4
 
 import sys
 

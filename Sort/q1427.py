@@ -2,10 +2,10 @@
 
 import sys
 
-word=sys.stdin.readline()
+word=sys.stdin.readline().strip()
 
 li=[]
-for i in word[:-1]:
+for i in word:
     li.append(int(i))
 
 li=sorted(li,reverse=True)
