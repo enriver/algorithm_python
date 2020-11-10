@@ -10,10 +10,13 @@ class Node:
 
 
 class Tree:
-    def __init__(self,root):
-        self.root=root
+    def __init__(self):
+        self.root=None
 
     def insert(self, data):
+        if self.root is None:
+            self.root=Node(data)
+
         self.current_node=self.root
 
         while True:
@@ -65,8 +68,7 @@ class Tree:
 
 
 if __name__ == "__main__":
-    root=Node(int(sys.stdin.readline()))
-    tree=Tree(root)
+    tree=Tree()
 
     while True:
         try:
