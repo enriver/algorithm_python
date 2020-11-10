@@ -36,7 +36,7 @@ class Tree:
             if root is None:
                 pass
             else:
-                print(root.data,end='->')
+                print(root.data,end=' ')
                 _pre_order(root.left)
                 _pre_order(root.right)
         _pre_order(self.root)
@@ -48,7 +48,7 @@ class Tree:
                 pass
             else:
                 _in_order(root.left)
-                print(root.data,end='->')
+                print(root.data,end=' ')
                 _in_order(root.right)
         _in_order(self.root)
 
@@ -60,7 +60,7 @@ class Tree:
             else:
                 _post_order(root.left)
                 _post_order(root.right)
-                print(root.data, end='->')
+                print(root.data, end=' ')
         _post_order(self.root)
 
 
