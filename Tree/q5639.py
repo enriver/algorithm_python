@@ -9,24 +9,21 @@ def postorder(start, end):
 
     division = end + 1
     for i in range(start + 1, end + 1):
-        if pre[start] < pre[i]:
+        if node[start] < node[i]:
             division = i
             break
 
     postorder(start + 1, division - 1)
     postorder(division, end)
-    print(pre[start])
+    print(node[start])
 
 sys.setrecursionlimit(10 ** 8)
 
-pre = []
-count = 0
-while count <= 10000:
+node = []
+while True:
     try:
-        num = int(sys.stdin.readline())
+        node.append(int(sys.stdin.readline()))
     except:
         break
-    pre.append(num)
-    count += 1
 
-postorder(0, len(pre) - 1)
+postorder(0, len(node) - 1)
