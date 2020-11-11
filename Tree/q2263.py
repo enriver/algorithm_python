@@ -2,6 +2,10 @@
 
 import sys
 
+'''
+시간초과
+'''
+
 class Node:
     def __init__(self,data):
         self.data=data
@@ -70,6 +74,7 @@ class Tree:
 if __name__=="__main__":
     tree=Tree()
 
+    sys.setrecursionlimit(10**9)
     n=int(sys.stdin.readline())
     
     for i in range(2):
@@ -82,3 +87,6 @@ if __name__=="__main__":
         tree.insert(i)
 
     tree.preorder()
+
+
+    
