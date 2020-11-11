@@ -70,7 +70,35 @@ class BinarySearchTree(object):
         
         return node, deleted
 
-  
+    def pre_order_traversal(self):
+        def _pre_order_traversal(root):
+            if root is None:
+                pass
+            else:
+                print(root.data, end=' ')
+                _pre_order_traversal(root.left)
+                _pre_order_traversal(root.right)
+        _pre_order_traversal(self.root)
+
+    def in_order_traversal(self):
+        def _in_order_traversal(root):
+            if root is None:
+                pass
+            else:
+                _in_order_traversal(root.left)
+                print(root.data,end=' ')
+                _in_order_traversal(root.right)
+        _in_order_traversal(self.root)
+
+    def post_order_traversal(self):
+        def _post_order_traversal(root):
+            if root is None:
+                pass
+            else:
+                _post_order_traversal(root.left)
+                _post_order_traversal(root.right)
+                print(root.data,end=' ')
+        _post_order_traversal(self.root)
 
 if __name__ == "__main__":
     array=[40,4,34,45,14,55,48,13,15,49]
@@ -80,6 +108,7 @@ if __name__ == "__main__":
     for x in array:
         bst.insert(x)
 
+    '''
     # 탐색
 
     print(bst.find(15))
@@ -90,3 +119,13 @@ if __name__ == "__main__":
     print(bst.delete(55))
     print(bst.delete(14))
     print(bst.delete(6))
+    '''
+
+    print('전위')
+    bst.pre_order_traversal()
+    print()
+    print('후위')
+    bst.post_order_traversal()
+    print()
+    print('중위')
+    bst.in_order_traversal()
