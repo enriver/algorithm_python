@@ -1,131 +1,85 @@
-class Node(object):
-    def __init__(self, data):
+# 이진 검색 트리
+
+import sys
+
+class Node:
+    def __init__(self,data):
         self.data=data
         self.left=None
         self.right=None
 
 
-class BinarySearchTree(object):
+class Tree:
     def __init__(self):
         self.root=None
 
-    # 삽입
-    def insert(self, data):
-        self.root=self._insert_value(self.root, data)
-
-        return self.root is not None
-
-    def _insert_value(self, node, data):
-        if node is None:
-            node=Node(data)
-        else:
-            if data <= node.data:
-                node.left=self._insert_value(node.left,data)
-            else:
-                node.right=self._insert_value(node.right,data)
-
-        return node
-
-    # 탐색
-    def find(self, key):
-        return self._find_value(self.root, key)
-
-    def _find_value(self, root, key):
-        if root is None or root.data==key:
-            return root is not None
-        elif key <root.data:
-            return self._find_value(root.left,key)
-        else:
-            return self._find_value(root.right,key)
-
-    # 삭제
-    def delete(self, key):
-        self.root, deleted = self._delete_value(self.root, key)
-        return deleted
-
-    def _delete_value(self, node, key):
-        if node is None:
-            return node, False
-
-        deleted=False
-        if key==node.data:
-            deleted=True
-            if node.left and node.right:
-                parent,child=node, node.right
-                while child.left is not None:
-                    parent, child =child, child.left
-                child.left=node.left
-                if parent != node:
-                    parent.left=child.right
-                    child.right=node.right
-                node=child
-            elif node.left or node.right:
-                node=node.left or node.right
-            else:
-                node=None
-        elif key<node.data:
-            node.left, deleted=self._delete_value(node.left, key)
-        else:
-            node.right, deleted = self._delete_value(node.right, key)
+    def insert(self,data):
+        if self.root is None:
+            self.root=Node(data)
+            return
         
-        return node, deleted
+        self.current_node=self.root
 
-    def pre_order_traversal(self):
-        def _pre_order_traversal(root):
+        while True:
+            if self.current_node.data>data:
+                if self.current_node.left is None:
+                    self.current_node.left=Node(data)
+                    break
+                else:
+                    self.current_node=self.current_node.left
+            else:
+                if self.current_node.right is None:
+                    self.current_node.right=Node(data)
+                    break
+                else:
+                    self.current_node=self.current_node.right
+    
+    #전위
+    def preorder(self):
+        def _pre_order(root):
             if root is None:
                 pass
             else:
+                print(root.data,end=' ')
+                _pre_order(root.left)
+                _pre_order(root.right)
+        _pre_order(self.root)
+
+    #중위
+    def inorder(self):
+        def _in_order(root):
+            if root is None:
+                pass
+            else:
+                _in_order(root.left)
+                print(root.data,end=' ')
+                _in_order(root.right)
+        _in_order(self.root)
+
+    #후위
+    def postorder(self):
+        def _post_order(root):
+            if root is None:
+                pass
+            else:
+                _post_order(root.left)
+                _post_order(root.right)
                 print(root.data, end=' ')
-                _pre_order_traversal(root.left)
-                _pre_order_traversal(root.right)
-        _pre_order_traversal(self.root)
+        _post_order(self.root)
 
-    def in_order_traversal(self):
-        def _in_order_traversal(root):
-            if root is None:
-                pass
-            else:
-                _in_order_traversal(root.left)
-                print(root.data,end=' ')
-                _in_order_traversal(root.right)
-        _in_order_traversal(self.root)
-
-    def post_order_traversal(self):
-        def _post_order_traversal(root):
-            if root is None:
-                pass
-            else:
-                _post_order_traversal(root.left)
-                _post_order_traversal(root.right)
-                print(root.data,end=' ')
-        _post_order_traversal(self.root)
 
 if __name__ == "__main__":
-    array=[40,4,34,45,14,55,48,13,15,49]
-
-    bst=BinarySearchTree()
-
-    for x in array:
-        bst.insert(x)
-
-    '''
-    # 탐색
-
-    print(bst.find(15))
-    print(bst.find(17))
-
-    # 삭제
-
-    print(bst.delete(55))
-    print(bst.delete(14))
-    print(bst.delete(6))
-    '''
-
-    print('전위')
-    bst.pre_order_traversal()
+    array=[40,4, 34, 45, 14, 55, 48, 13, 15, 49, 47 ]
+    tree=Tree()
+    
+    for i in array:
+        tree.insert(i)
+    
+    print('전위 순회')
+    tree.preorder()
     print()
-    print('후위')
-    bst.post_order_traversal()
+    print('후위 순회')
+    tree.postorder()
     print()
-    print('중위')
-    bst.in_order_traversal()
+    print('중위 순회')
+    tree.inorder()
