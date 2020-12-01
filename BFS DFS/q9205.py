@@ -35,7 +35,7 @@ for _ in range(t):
     print(result)
     
 '''
-# bsf 풀이
+# bfs 풀이
 
 def bfs(x,y):
     global result
@@ -55,7 +55,7 @@ def bfs(x,y):
 
             if dx+dy<=1000 and not visit[i]:
                 visit[i]=True
-                bfs(value[0],value[1])
+                que.append((value[0],value[1]))
     return
 
 t=int(sys.stdin.readline())
