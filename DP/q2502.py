@@ -21,7 +21,7 @@ while True:
         break
     elif dp[D-1]>K:
         i+=1
-        j=1
+        j=i
     else:
         j+=1
 
