@@ -1,3 +1,6 @@
 # algorithm_python
 
-백준알고리즘 파이썬 풀이
+백준알고리즘
+Leet Code
+
+파이썬 풀이
