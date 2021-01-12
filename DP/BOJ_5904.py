@@ -4,19 +4,21 @@ import sys
 
 # S_{0}='moo'
 # S_{n+1}=S_{n}+'m'+'o'*(n+2)+S_{n}  (n>=0)
+#        =S_{n}+(n+3)+S_{n}
+#        =2*S_{n}+(n+3)
 
 def solve(n,k): 
     if k==0:
         return 'moo'[n-1]
     
-    if n<=dp[k-1]: # n<= S_{n-1} 인 경우
+    if n<=dp[k-1]: # n<= S_{k-1} 인 경우
         return solve(n,k-1)
-    elif n<=dp[k-1]+k+3: # n<=S_{n-1}+n+3 인 경우
+    elif n<=dp[k-1]+k+3: # n<=S_{k-1}+k+3 인 경우
         if n-dp[k-1]==1: # 남은 글자수가 1 : m
             return 'm'
         else: # else: o
             return 'o'
-    else: # S_{n-1}+n+3< n 인 경우
+    else: # S_{k-1}+k+3< n 인 경우
         return solve(n-dp[k-1]-(k+3),k-1)
 
 if __name__=="__main__":
