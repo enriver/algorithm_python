@@ -5,18 +5,24 @@ from collections import deque
 
 S=int(sys.stdin.readline())
 
-dp=[[0 for _ in range(S+1)] for _ in range(S+1)]
-dp[1][0]=1
+visit=[[0 for _ in range(S+1)] for _ in range(S+1)]
 
-que=deque()
-que.append((1,0))
+def bfs():
+    que=deque()
+    que.append((1,0))
 
-while que:
-    i,j = que.popleft()
+    while que:
+        w,c=que.popleft()
 
-    if i<=S+1:
-        if dp[i][i]=0:
-            dp[i][i]=dp[i][j]+1
-            que.append((i,i))
-    
-    if i+j <=1000:
+        if w==S:
+            print(visit[w][c])
+            return
+        
+        for nx,ny in [(w,w),(w+c,c),(w-1,c)]:
+            if nx<0 or nx>S:
+                continue
+            if not visit[nx][ny]:
+                que.append((nx,ny))
+                visit[nx][ny]=visit[w][c]+1
+
+bfs()
