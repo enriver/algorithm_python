@@ -1,6 +1,6 @@
 # algorithm_python
 
-+ 백준알고리즘
-+ Leet Code
++ Baekjoon Online Judge (https://www.acmicpc.net/)
++ Leet Code (https://leetcode.com/)
 
-파이썬 풀이
+Algorithm Problem Solving by PYTHON
