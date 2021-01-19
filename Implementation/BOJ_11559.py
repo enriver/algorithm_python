@@ -3,13 +3,18 @@
 import sys
 from collections import deque
 
-sys.setrecursionlimit(10**9)
-
 def fall(rgb_index,rgb_y):
     for x,y in rgb_index:
         puyo[x][y]='.'
     
-    print(puyo)   
+    for y in rgb_y:
+        for x in range(11,0,-1):
+            if puyo[x][y]=='.':
+                for k in range(x-1,-1,-1):
+                    if puyo[k][y]!='.':
+                        puyo[x][y]=puyo[k][y]
+                        puyo[k][y]='.'
+                        break
 
 dx=[1,-1,0,0]
 dy=[0,0,1,-1]
