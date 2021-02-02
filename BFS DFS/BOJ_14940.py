@@ -12,7 +12,7 @@ def solve(x,y,cnt):
 
     while que:
         x,y,cnt=que.popleft()
-      
+
         distance[x][y]=cnt
 
         for i in range(4):
