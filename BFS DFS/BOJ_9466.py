@@ -1,17 +1,22 @@
 # 텀 프로젝트 - G4
 
 import sys
+from collections import deque
 
-def solve(val): # partner[i]
+sys.setrecursionlimit(10**9)
+
+def solve(val): 
     global res
-
-    if val not in visit:
-        visit.append(val)
-        solve(partner[val])
     
-    else:
-        res+=len(visit)-visit.index(val)
+    visit.add(val)
+    stack.append(val)
 
+    if partner[val] not in visit:
+        solve(partner[val])
+
+    else:
+        if partner[val] in stack:
+            res+=len(stack)-stack.index(partner[val])
 
 if __name__=="__main__":
     T=int(sys.stdin.readline())
@@ -23,11 +28,11 @@ if __name__=="__main__":
         partner.extend(list(map(int, sys.stdin.readline().split())))
 
         res=0
-        visit=list()
+        visit=set()
 
-        for i in range(1,num+1):
-            if i not in visit and partner[i] not in visit:
-                visit.append(i)
-                solve(partner[i])
+        for i in range(1, num+1):
+            if i not in visit:
+                stack=list()
+                solve(i)
 
         print(num-res)
