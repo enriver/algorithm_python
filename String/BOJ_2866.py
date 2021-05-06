@@ -10,18 +10,23 @@ if __name__=="__main__":
         table.append(list(sys.stdin.readline().rstrip()))
 
 
+    word_li=list()
+
+    for j in range(C):
+        word=''
+        for i in range(R):
+            word+=table[i][j]
+
+        word_li.append(word)
+
     count=0
     r=1
 
     while r<R:
-        word_set=set()
-        for j in range(C):
-            word=''
-            for i in range(r,R):
-                word+=table[i][j]
-
-            if word not in word_set:
-                word_set.add(word)
+        temp=set()
+        for i in word_li:
+            if i[r:] not in temp:
+                temp.add(i[r:])
             else:
                 print(count)
                 sys.exit(0)
