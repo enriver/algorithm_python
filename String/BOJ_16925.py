@@ -2,52 +2,41 @@
 
 import sys
 
+def find_ps(word):
+    result=['' for _ in range(2*N-2)]
+    
+    for i in range(0,len(ps),2):
+        (w1, idx1),(w2, idx2)=ps[i],ps[i+1]
+        p1, s1=word.startswith(w1), word.endswith(w1)
+        p2, s2=word.startswith(w2), word.endswith(w2)
+
+        if p1 and s2:
+            result[idx1]='P'
+            result[idx2]='S'
+        elif p2 and s1:
+            result[idx1]='S'
+            result[idx2]='P'
+        else:
+            return
+
+    print(word)
+    print(''.join(result))
+    sys.exit(0)
+
 if __name__=="__main__":
     N=int(sys.stdin.readline())
 
     ps=list()
 
-    for _ in range(2*N-2):
-        ps.append(sys.stdin.readline().rstrip());
+    for i in range(2*N-2):
+        ps.append((sys.stdin.readline().rstrip(),i));
 
-    ps_sorted=sorted(ps, key=len)
+    ps.sort(key=lambda x:len(x[0]))
 
-    #print(ps_sorted)
-
-    a,b=ps_sorted[-2], ps_sorted[-1]
+    a=ps[-2][0]
+    b=ps[-1][0]
 
     if a[1:]==b[:-1]:
-        word=a+b[-1]
-    else:
-        word=b+a[-1]
-
-    print(word)
-    result=list()
-
-    for i in ps:
-        isStart=False
-        isEnd=False
-
-        if word.startswith(i):
-            isStart=True
-        if word.endswith(i):
-            isEnd=True
-        
-        if isStart and isEnd:
-            result.append('B')
-        elif isStart:
-            result.append('P')
-        else:
-            result.append('S')
-
-    now='P'
-    for i in range(len(result)):
-        if result[i]=='B':
-            if now=='P':
-                result[i]=now
-                now='S'
-            else:
-                result[i]=now
-                now='P'
-
-    print(''.join(result))
+        find_ps(a+b[-1])
+    if b[1:]==a[:-1]:
+        find_ps(b+a[-1])
