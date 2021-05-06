@@ -1,53 +1,52 @@
 #토마토 3차원 - S1
+'''
+visit 행렬을 만들어서 방문 체크를 해주지 않아도 됨
+'''
 
 import sys
 from collections import deque
 
-M,N,H=map(int,sys.stdin.readline().split())
-
-visit=[[[False for _ in range(M)] for _ in range(N)] for _ in range(H)]
-mat=[[[0 for _ in range(M)] for _ in range(N)] for _ in range(H)]
-
-for i in range(H):
-    for j in range(N):
-        tomato=list(map(int,sys.stdin.readline().split()))
-        for k in range(M):
-            mat[i][j][k]=tomato[k]
-
-dx=[0,0,0,0,1,-1]
-dy=[0,0,1,-1,0,0]
-dz=[1,-1,0,0,0,0]
-
 def bfs():
+    dx=[-1,1,0,0,0,0]
+    dy=[0,0,1,-1,0,0]
+    dz=[0,0,0,0,1,-1]
+
     que=deque()
+    day=0
+
     for i in range(H):
         for j in range(N):
             for k in range(M):
-                if mat[i][j][k]==-1:
-                    visit[i][j][k]=True
-                if mat[i][j][k]==1 and not visit[i][j][k]:
-                    visit[i][j][k]=True
-                    que.append((i,j,k,0))
+                if tomato[i][j][k]==1:
+                    que.append((i,j,k,day))
+                if tomato[i][j][k]==-1:
+                    tomato[i][j][k]=1 # 이미 지나간 자리라 바꿔줘도됨
 
     while que:
-        z,x,y,day=que.popleft()
+        x,y,z,day=que.popleft()
 
         for i in range(6):
-            nz,nx,ny=z+dz[i],x+dx[i],y+dy[i]
+            nx,ny,nz=x+dx[i], y+dy[i], z+dz[i]
 
-            if 0<=nz<H and 0<=nx<N and 0<=ny<M:
-                if mat[nz][nx][ny]==0 and not visit[nz][nx][ny]:
-                    visit[nz][nx][ny]=True
-                    que.append((nz,nx,ny,day+1))
+            if 0<=nx<H and 0<=ny<N and 0<=nz<M:
+                if tomato[nx][ny][nz]==0:
+                    tomato[nx][ny][nz]=1
+                    que.append((nx,ny,nz,day+1))
 
     return day
+    
 
-def solve(days):
+if __name__=="__main__":
+    M,N,H=map(int, sys.stdin.readline().split()) # 가로, 세로, 높이
+    tomato=[[list(map(int,sys.stdin.readline().split())) for _ in range(N)] for _ in range(H)]
+
+    days=bfs()
+
     for i in range(H):
         for j in range(N):
             for k in range(M):
-                if visit[i][j][k]==False:
-                    return -1
-    return days
+                if tomato[i][j][k]==0:
+                    print(-1)
+                    sys.exit(0)
 
-print(solve(bfs()))
+    print(days)
